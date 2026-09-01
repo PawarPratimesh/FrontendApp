@@ -1,0 +1,119 @@
+.daily-forecast {
+  padding: var(--space-lg);
+}
+
+.daily-forecast__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  margin-bottom: var(--space-lg);
+  color: var(--color-text-secondary);
+}
+
+.daily-forecast__title svg {
+  width: 18px;
+  height: 18px;
+  color: var(--color-accent);
+}
+
+.daily-forecast__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.daily-forecast__row {
+  display: grid;
+  grid-template-columns: 60px 70px 36px 1fr 36px;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.daily-forecast__row:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.daily-forecast__row:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.daily-forecast__row--today {
+  background: rgba(96, 165, 250, 0.06);
+}
+
+.daily-forecast__day {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.daily-forecast__row--today .daily-forecast__day {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.daily-forecast__condition {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.daily-forecast__icon {
+  font-size: 1.3rem;
+}
+
+.daily-forecast__precip-chance {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.65rem;
+  color: var(--color-accent);
+}
+
+.daily-forecast__precip-chance svg {
+  width: 8px;
+  height: 8px;
+}
+
+.daily-forecast__low {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-align: right;
+  font-weight: 500;
+}
+
+.daily-forecast__high {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.daily-forecast__bar-container {
+  position: relative;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.daily-forecast__bar {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-accent-warm) 50%, var(--color-accent-orange) 100%);
+  transition: width var(--transition-slow);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .daily-forecast__row {
+    grid-template-columns: 50px 55px 30px 1fr 30px;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-xs);
+  }
+}
