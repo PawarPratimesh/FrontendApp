@@ -11,6 +11,33 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [bgGradient, setBgGradient] = useState('var(--gradient-sky-day)');
+  const [backendStatus, setBackendStatus] = useState({
+    message: '',
+    loading: false,
+    error: null,
+  });
+
+  const handleTestBackend = async () => {
+    setBackendStatus({ message: '', loading: true, error: null });
+    try {
+      const response = await fetch('https://frontendapp-c0ao.onrender.com/api/test');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setBackendStatus({
+        message: data.message || JSON.stringify(data),
+        loading: false,
+        error: null,
+      });
+    } catch (err) {
+      setBackendStatus({
+        message: '',
+        loading: false,
+        error: err.message || 'Failed to fetch from backend',
+      });
+    }
+  };
 
   const loadWeather = useCallback((city = 'New York') => {
     setIsLoading(true);
@@ -93,6 +120,47 @@ function App() {
             </svg>
           </button>
         </header>
+
+        {/* Temporary Backend Test */}
+        <div className="app__backend-test animate-fade-in">
+          <button
+            className="app__backend-test-btn"
+            onClick={handleTestBackend}
+            disabled={backendStatus.loading}
+            id="test-backend-btn"
+          >
+            {backendStatus.loading ? (
+              <>
+                <span className="app__backend-spinner" />
+                Connecting...
+              </>
+            ) : (
+              <>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="app__backend-icon">
+                  <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+                  <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+                  <line x1="6" y1="6" x2="6.01" y2="6" />
+                  <line x1="6" y1="18" x2="6.01" y2="18" />
+                </svg>
+                Test Backend
+              </>
+            )}
+          </button>
+
+          {backendStatus.message && (
+            <div className="app__backend-result app__backend-result--success" id="backend-result">
+              <span className="app__backend-status-dot app__backend-status-dot--success" />
+              <span>{backendStatus.message}</span>
+            </div>
+          )}
+
+          {backendStatus.error && (
+            <div className="app__backend-result app__backend-result--error" id="backend-error">
+              <span className="app__backend-status-dot app__backend-status-dot--error" />
+              <span>{backendStatus.error}</span>
+            </div>
+          )}
+        </div>
 
         {/* Loading State */}
         {isLoading && (
