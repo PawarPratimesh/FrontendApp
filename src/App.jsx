@@ -9,7 +9,6 @@ import './App.css';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [bgGradient, setBgGradient] = useState('var(--gradient-sky-day)');
   const [backendStatus, setBackendStatus] = useState({
     message: '',
